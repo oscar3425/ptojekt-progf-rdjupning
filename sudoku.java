@@ -6,16 +6,12 @@ public class Sudoku implements SudokuSolver{
 
     public Sudoku(){
         rut = new int[9][9];
-        rut[3][3]=4;
-        rut[0][1]=2;
-        rut[2][1]=1;
-        rut[0][0]=4;
-        rut[1][0]=4;
+       
     }
 
     public static void main(String[] args) {
         Sudoku s= new Sudoku();
-        boolean t= s.solve(0,0);
+        boolean t= s.solve();
         System.out.println(t);
         if (t){
         for (int i=0; i<9; i++){
@@ -27,7 +23,9 @@ public class Sudoku implements SudokuSolver{
         }
         
     }
-    @Override
+    public boolean solve(){
+        return solve(0, 0);
+    }
     private boolean solve(int r, int c){
         if (r==9){
             return true;
@@ -61,7 +59,7 @@ public class Sudoku implements SudokuSolver{
     }
 
     @Override
-    private boolean isValid(int r, int c) {
+    public boolean isValid(int r, int c) {
         if (!(r>=0 && r<=8 && c>=0 && c <=8)){
             throw new IndexOutOfBoundsException("r eller c eller digit är för stor eller för liten");
         }
@@ -89,7 +87,7 @@ public class Sudoku implements SudokuSolver{
     }
     @Override
     public void set(int row, int col, int digit){
-        if (row>=0&& row<=8 %% col>=0 && col <=8 && digit>=1 &&digit<=9){
+        if (row>=0 && row<=8 && col>=0 && col <=8 && digit>=1 && digit<=9){
             rut[row][ col]= digit;
         }else {
             throw new IndexOutOfBoundsException("row eller col eller digit är för stor eller för liten");
@@ -97,8 +95,8 @@ public class Sudoku implements SudokuSolver{
     }
     @Override
     public int get(int row, int col){
-        
-        if (row>=0&& row<=8 %% col>=0 && col <=8){
+
+        if (row>=0 && row<=8 && col>=0 && col <=8){
             return rut[row][ col];
         }else {
             throw new IndexOutOfBoundsException("row eller col är för stor eller för liten");
@@ -106,7 +104,7 @@ public class Sudoku implements SudokuSolver{
     }
     @Override
     public void clear(int row, int col){
-        if (row>=0&& row<=8 %% col>=0 && col <=8){
+        if (row>=0 && row<=8 && col>=0 && col <=8){
             rut[row][col]=0;
         }else {
             throw new IndexOutOfBoundsException("row eller col är för stor eller för liten");
@@ -130,8 +128,28 @@ public class Sudoku implements SudokuSolver{
         return true;
     }
     @Override
-    public void setGrid(int[][] m){
-        rut=m;
+    public void setGrid(int[][] board){
+        if (board.length != 9) {
+        throw new IllegalArgumentException("matrisen måste vara 9x9");
+    }
+    for (int i = 0; i < 9; i++) {
+        if (board[i].length != 9) {
+            throw new IllegalArgumentException("matrisen måste vara 9x9");
+        }
+    }
+
+        int[][] newRut = new int[9][9];
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                int val = board[i][j];
+                if (val < 0 || val > 9) {
+                    throw new IllegalArgumentException("värdena måste vara mellan 0-9");
+                }
+                newRut[i][j] = val;
+            }
+    }
+        rut = newRut;
+
     }
     @Override
     public int[][] getGrid(){
