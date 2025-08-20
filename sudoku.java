@@ -11,17 +11,7 @@ public class Sudoku implements SudokuSolver{
 
     public static void main(String[] args) {
         Sudoku s= new Sudoku();
-        boolean t= s.solve();
-        System.out.println(t);
-        if (t){
-        for (int i=0; i<9; i++){
-            System.out.println(" ");
-            for (int j=0;j<9;j++){
-                System.out.print(s.rut[i][j]+ " ");
-            }
-        }
-        }
-        
+        SudokuGraphics g = new SudokuGraphics(s);
     }
     public boolean solve(){
         return solve(0, 0);
