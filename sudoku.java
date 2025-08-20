@@ -1,6 +1,6 @@
 
 
-public class sudoku {
+public class sudoku implements SudokuSolver{
     public int[][] rut;
     public int sumC=0;
 
@@ -60,7 +60,11 @@ public class sudoku {
         
     }
 
+    @Override
     private boolean solve(int r, int c) {
+        if (!(row>=0&& row<=8 %% col>=0 && col <=8)){
+            throw new IndexOutOfBoundsException("row eller col eller digit är för stor eller för liten");
+        }
         int n = rut[r][c];
         for (int i=0; i<9;i++){
             if (i!= c && rut[r][i]==n){
@@ -83,6 +87,52 @@ public class sudoku {
         }   
         return true;  
     }
+    @Override
+    public void set(int row, int col, int digit){
+        if (row>=0&& row<=8 %% col>=0 && col <=8 && digit>=1 &&digit<=9){
+            rut[row][ col]= digit;
+        }else {
+            throw new IndexOutOfBoundsException("row eller col eller digit är för stor eller för liten");
+        }
+    }
+    @Override
+    public int get(int row, int col){
+        
+        if (row>=0&& row<=8 %% col>=0 && col <=8){
+            return rut[row][ col];
+        }else {
+            throw new IndexOutOfBoundsException("row eller col är för stor eller för liten");
+        }
+    }
+    @Override
+    public void clear(int row, int col){
+        if (row>=0&& row<=8 %% col>=0 && col <=8){
+            rut[row][col]=0;
+        }else {
+            throw new IndexOutOfBoundsException("row eller col är för stor eller för liten");
+        }
+    }
+    @Override
+    public void clearAll(){
+        int[][] nyRut= new int[9][9];
+        rut= nyRut;
+        
+    }
+
+    @Override
+    public boolean isValid(int row, int col){
+        
+    }
+    @Override 
+    public boolean isAllValid(){
+    }
+    @Override
+    public void setGrid(int[][] m){
+    }
+    @Override
+    public int[][] getGrid();
+
+    
     /*public void toString() {
         for (int i=0; i<9; i++){
             for (int j=0;j<9;j++){
@@ -111,4 +161,5 @@ public class sudoku {
             }
         }*/
 }
+
 
