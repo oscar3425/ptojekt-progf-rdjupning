@@ -1,10 +1,10 @@
+package sudoku;
 
-
-public class sudoku implements SudokuSolver{
+public class Sudoku implements SudokuSolver{
     public int[][] rut;
     public int sumC=0;
 
-    public sudoku(){
+    public Sudoku(){
         rut = new int[9][9];
         rut[3][3]=4;
         rut[0][1]=2;
@@ -14,8 +14,8 @@ public class sudoku implements SudokuSolver{
     }
 
     public static void main(String[] args) {
-        sudoku s= new sudoku();
-        boolean t= s.sudokuSolve(0,0);
+        Sudoku s= new Sudoku();
+        boolean t= s.solve(0,0);
         System.out.println(t);
         if (t){
         for (int i=0; i<9; i++){
@@ -62,7 +62,7 @@ public class sudoku implements SudokuSolver{
 
     @Override
     private boolean isValid(int r, int c) {
-        if (!(r>=0&& r<=8 %% c>=0 && c <=8)){
+        if (!(r>=0 && r<=8 && c>=0 && c <=8)){
             throw new IndexOutOfBoundsException("r eller c eller digit är för stor eller för liten");
         }
         int n = rut[r][c];
@@ -140,7 +140,6 @@ public class sudoku implements SudokuSolver{
 
    
 }
-
 
 
 
