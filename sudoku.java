@@ -1,0 +1,114 @@
+
+
+public class sudoku {
+    public int[][] rut;
+    public int sumC=0;
+
+    public sudoku(){
+        rut = new int[9][9];
+        rut[3][3]=4;
+        rut[0][1]=2;
+        rut[2][1]=1;
+        rut[0][0]=4;
+        rut[1][0]=4;
+    }
+
+    public static void main(String[] args) {
+        sudoku s= new sudoku();
+        boolean t= s.sudokuSolve(0,0);
+        System.out.println(t);
+        if (t){
+        for (int i=0; i<9; i++){
+            System.out.println(" ");
+            for (int j=0;j<9;j++){
+                System.out.print(s.rut[i][j]+ " ");
+            }
+        }
+        }
+        
+    }
+
+    private boolean sudokuSolve(int r, int c){
+        if (r==9){
+            return true;
+        }
+        if (r<0){
+            return false;
+        }
+        
+        int r1=r; 
+        int c1= c+1;
+        if (c==8){
+            r1=r+1;
+            c1=0;
+        }
+        if (rut[r][c]!=0){
+            return sudokuSolve(r1, c1);
+        }
+        
+        for (int i=1; i<10;i++){
+            sumC++;
+            rut[r][c]=i;
+            if(solve(r,c)){
+                if (sudokuSolve(r1,c1)){
+                    return true;
+                }
+            }
+        }
+        rut[r][c]= 0;
+        return false;
+        
+    }
+
+    private boolean solve(int r, int c) {
+        int n = rut[r][c];
+        for (int i=0; i<9;i++){
+            if (i!= c && rut[r][i]==n){
+                return false;
+            }
+            if(i!= r && rut[i][c]==n){
+                return false;
+            }
+        }
+        int r1= (r/3)*3 ;
+        int c1=(c/3)*3 ;
+        for (int j=0; j<3; j++){
+            for (int k=0; k<3;k++){
+                if ( rut[r1+j][c1+k]==n){
+                    if ((r1+j)!=r || (c1+k)!=c){
+                    return false;
+                    }
+                }
+            }
+        }   
+        return true;  
+    }
+    /*public void toString() {
+        for (int i=0; i<9; i++){
+            for (int j=0;j<9;j++){
+                Syste
+            }
+        }
+    }*/
+
+
+    /*rut[r][c]=0;
+        if (c>0){
+                return sudokuSolve(r,c-1,rut[r][c-1]+1);
+            } else {
+                if (r<1){
+                    return false;
+                }
+                return sudokuSolve(r-1, 8, rut[r-1][8]+1);
+            }
+            */
+            /*if (start==10){
+            rut[r][c]=0;
+            if (c>0){
+                return sudokuSolve(r,c-1,rut[r][c-1]+1);
+            } else {
+                return sudokuSolve(r-1, 8, rut[r-1][8]+1);
+            }
+        }*/
+}
+
