@@ -87,17 +87,23 @@ public class Sudoku implements SudokuSolver{
     }
     @Override
     public void set(int row, int col, int digit){
-        if (row>=0 && row<=8 && col>=0 && col <=8 && digit>=1 && digit<=9){
-            rut[row][ col]= digit;
+        if (row>=0 && row<=8 && col>=0 && col <=8){
+            if (digit>=1 && digit<=9){
+                rut[row][ col]= digit;
+            }else {
+                throw new IllegalArgumentException("digit är för stor eller för liten");
+            }
+
         }else {
-            throw new IndexOutOfBoundsException("row eller col eller digit är för stor eller för liten");
+            throw new IndexOutOfBoundsException("row eller col är för stor eller för liten");
         }
     }
     @Override
     public int get(int row, int col){
 
         if (row>=0 && row<=8 && col>=0 && col <=8){
-            return rut[row][ col];
+            int copy = rut[row][col];
+            return copy;
         }else {
             throw new IndexOutOfBoundsException("row eller col är för stor eller för liten");
         }
@@ -153,7 +159,11 @@ public class Sudoku implements SudokuSolver{
     }
     @Override
     public int[][] getGrid(){
-        return rut;
+        int[][] copy = new int[9][9];
+        for (int i = 0; i < 9; i++) {
+            System.arraycopy(rut[i], 0, copy[i], 0, 9);
+        }
+        return copy;
     }
 
    
