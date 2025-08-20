@@ -1,39 +1,37 @@
 package sudoku;
 
 
-import javax.swing.SwingUtilities;
-import javax.swing.JFrame;
-import java.awt.Container;
-import java.util.Map;
-import javax.swing.JList;
-import java.util.List;
-import javax.swing.ListModel;
-import javax.swing.JScrollPane;
-import javax.swing.JPanel;
-import javax.swing.JButton;
 import java.awt.BorderLayout;
-import javax.naming.spi.ObjectFactoryBuilder;
+import java.awt.Container;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
+import javax.swing.SwingUtilities;
 
-public class Grafik {
-    public Grafik(Sudoku s){
+public class SudokuGraphics {
+    public SudokuGraphics(Sudoku s){
         SwingUtilities.invokeLater(() -> createWindow(s, "Sudoku",100, 300));
     }
     private void createWindow(Sudoku solver, String title, int height,int width){
         JFrame frame = new JFrame(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = frame.getContentPane();
-        pane.setLayout(new BorderLayout());
-        frame.pack();
+        //pane.setLayout(new BorderLayout());
+        //pane.setLayout(new java.awt.GridLayout(9, 9));
+        JPanel[][] panels = new JPanel[9][9];
+        for (int i=0; i<9;i++){
+            for (int j=0; j<9; j++){
+                panels[i][j] = new JPanel();
+                pane.add(panels[i][j], BorderLayout.CENTER);
+            }
+        }
 
         JTextField[][] board = new JTextField[9][9];
         for (int i=0; i<9;i++){
             for (int j=0; j<9; j++){
                 board[i][j]= new JTextField(2);
-                frame.add(board[i][j]);
+                panels[i][j].add(board[i][j]);
             }
         }
         JButton solve =new JButton("solve");
@@ -55,7 +53,7 @@ public class Grafik {
             solver.solve();
             for (int i=0; i<9;i++){
                 for (int j=0; j<9; j++){
-                    board[i][j].setText((String) solver.get(i,j));
+                    board[i][j].setText(String.valueOf(solver.get(i,j)));
                 }
             }
 
@@ -71,7 +69,7 @@ public class Grafik {
             });
 
 
-
+        frame.pack();
         frame.setVisible(true);
     }
 }
