@@ -118,19 +118,29 @@ public class sudoku implements SudokuSolver{
         rut= nyRut;
         
     }
-
-    
     @Override 
     public boolean isAllValid(){
+        for (int i=0; i<9; i++){
+            for (int j=0;j<9;j++){
+                if(! isValid(i,j)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     @Override
     public void setGrid(int[][] m){
+        rut=m;
     }
     @Override
-    public int[][] getGrid();
+    public int[][] getGrid(){
+        return rut;
+    }
 
    
 }
+
 
 
 
