@@ -27,8 +27,8 @@ public class sudoku implements SudokuSolver{
         }
         
     }
-
-    private boolean sudokuSolve(int r, int c){
+    @Override
+    private boolean solve(int r, int c){
         if (r==9){
             return true;
         }
@@ -43,14 +43,14 @@ public class sudoku implements SudokuSolver{
             c1=0;
         }
         if (rut[r][c]!=0){
-            return sudokuSolve(r1, c1);
+            return solve(r1, c1);
         }
         
         for (int i=1; i<10;i++){
             sumC++;
             rut[r][c]=i;
-            if(solve(r,c)){
-                if (sudokuSolve(r1,c1)){
+            if(isValid(r,c)){
+                if (solve(r1,c1)){
                     return true;
                 }
             }
@@ -61,9 +61,9 @@ public class sudoku implements SudokuSolver{
     }
 
     @Override
-    private boolean solve(int r, int c) {
-        if (!(row>=0&& row<=8 %% col>=0 && col <=8)){
-            throw new IndexOutOfBoundsException("row eller col eller digit är för stor eller för liten");
+    private boolean isValid(int r, int c) {
+        if (!(r>=0&& r<=8 %% c>=0 && c <=8)){
+            throw new IndexOutOfBoundsException("r eller c eller digit är för stor eller för liten");
         }
         int n = rut[r][c];
         for (int i=0; i<9;i++){
@@ -119,10 +119,7 @@ public class sudoku implements SudokuSolver{
         
     }
 
-    @Override
-    public boolean isValid(int row, int col){
-        
-    }
+    
     @Override 
     public boolean isAllValid(){
     }
@@ -132,34 +129,8 @@ public class sudoku implements SudokuSolver{
     @Override
     public int[][] getGrid();
 
-    
-    /*public void toString() {
-        for (int i=0; i<9; i++){
-            for (int j=0;j<9;j++){
-                Syste
-            }
-        }
-    }*/
-
-
-    /*rut[r][c]=0;
-        if (c>0){
-                return sudokuSolve(r,c-1,rut[r][c-1]+1);
-            } else {
-                if (r<1){
-                    return false;
-                }
-                return sudokuSolve(r-1, 8, rut[r-1][8]+1);
-            }
-            */
-            /*if (start==10){
-            rut[r][c]=0;
-            if (c>0){
-                return sudokuSolve(r,c-1,rut[r][c-1]+1);
-            } else {
-                return sudokuSolve(r-1, 8, rut[r-1][8]+1);
-            }
-        }*/
+   
 }
+
 
 
